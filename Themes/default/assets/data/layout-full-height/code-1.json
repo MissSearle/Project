@@ -1,0 +1,4 @@
+@extends('layout.default', [
+  'appClass' => 'app-content-full-height',
+  'appContentClass' => 'p-0'
+])

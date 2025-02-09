@@ -1,0 +1,11 @@
+{
+    "name": "Access",
+    "alias": "access",
+    "description": "This module is for the login, register and forgot password pages",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Access\\Providers\\AccessServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,33 @@
+{
+    "name": "Settings",
+    "alias": "settings",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Settings\\Providers\\SettingsServiceProvider"
+    ],
+    "files": [],
+    "menus": {
+        "admin": [
+            {
+                "text": "Settings",
+                "icon": "ph:gear",
+                "category": "Main",
+                "priority": 2,
+                "children": [
+                    {
+                        "text": "General",
+                        "url": "/admin/settings",
+                        "priority": 1
+                    },
+                    {
+                        "text": "Menu",
+                        "url": "/admin/settings/menu",
+                        "priority": 2
+                    }
+                ]
+            }
+        ]
+    }
+}

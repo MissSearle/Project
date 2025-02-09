@@ -1,0 +1,21 @@
+{
+    "name": "Notifications",
+    "alias": "notifications",
+    "description": "",
+    "keywords": [],
+    "providers": [
+        "Modules\\Notifications\\Providers\\NotificationsServiceProvider"
+    ],
+    "files": [],
+    "menus": {
+        "admin": [
+            {
+                "text": "Send Notifications",
+                "icon": "ph:bell",
+                "url": "/admin/notifications",
+                "category": "Main",
+                "priority": 2
+            }
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+{
+    "name": "Dashboard",
+    "alias": "dashboard",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Dashboard\\Providers\\DashboardServiceProvider"
+    ],
+    "files": [],
+    "menus": {
+        "admin": [
+            {
+                "text": "Dashboard",
+                "icon": "ph:gauge",
+                "url": "/admin/dashboard",
+                "category": "Main",
+                "priority": 1
+            }
+        ],
+        "user": [
+            {
+                "text": "Dashboard",
+                "icon": "ph:gauge",
+                "url": "/dashboard",
+                "category": "Main",
+                "priority": 1
+            }
+        ]
+    }
+}

@@ -1,0 +1,47 @@
+{
+    "name": "Messaging",
+    "alias": "messaging",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Messaging\\Providers\\MessagingServiceProvider"
+    ],
+    "files": [],
+    "menus": {
+        "admin": [
+            {
+                "text": "Mail",
+                "icon": "ph:envelope",
+                "url": "/admin/mail",
+                "category": "Main",
+                "priority": 3
+            }
+        ],
+        "user": [
+            {
+                "text": "Mail",
+                "icon": "ph:envelope",
+                "category": "Main",
+                "priority": 3,
+                "children": [
+                    {
+                        "text": "Inbox",
+                        "url": "/inbox",
+                        "priority": 1
+                    },
+                    {
+                        "text": "Sent",
+                        "url": "/outbox",
+                        "priority": 2
+                    },
+                    {
+                        "text": "Saved",
+                        "url": "/saved",
+                        "priority": 3
+                    }
+                ]
+            }
+        ]
+    }
+}

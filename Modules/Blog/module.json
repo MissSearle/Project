@@ -1,0 +1,21 @@
+{
+    "name": "Blog",
+    "alias": "blog",
+    "description": "",
+    "keywords": [],
+    "providers": [
+        "Modules\\Blog\\Providers\\BlogServiceProvider"
+    ],
+    "files": [],
+    "menus": {
+        "user": [
+            {
+                "text": "Blog",
+                "icon": "ph:note-pencil",
+                "url": "/blog",
+                "category": "Pages",
+                "priority": 1
+            }
+        ]
+    }
+}

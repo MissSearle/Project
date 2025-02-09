@@ -1,0 +1,10 @@
+{
+    "Blog": true,
+    "Dashboard": true,
+    "Access": true,
+    "Settings": true,
+    "Notifications": true,
+    "Messaging": true,
+    "Profile": true,
+    "User": true
+}
