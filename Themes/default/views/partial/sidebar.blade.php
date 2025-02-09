@@ -6,97 +6,48 @@ $isAdminRoute = Str::startsWith(Request::path(), 'admin');
 
 // Fetch menu dynamically based on enabled modules
 $menus = MenuService::getMenus($isAdminRoute ? 'admin' : 'user');
-
-function renderSubMenu($items, $currentUrl)
-{
-$subMenu = '<div class="menu-submenu">';
-    foreach ($items as $menu) {
-    $menuUrl = $menu['url'] ?? '#';
-    $menuText = $menu['text'] ?? '';
-    $menuIcon = $menu['icon'] ?? '';
-    $hasSub = !empty($menu['children']) ? 'has-sub' : '';
-    $menuCaret = $hasSub ? '<span class="menu-caret"><b class="caret"></b></span>' : '';
-
-    // Check active state
-    $active = request()->is(ltrim($menuUrl, '/')) ? 'active' : '';
-
-    // Check if any child is active
-    $childActive = '';
-    if (!empty($menu['children'])) {
-        foreach ($menu['children'] as $child) {
-            if (request()->is(ltrim($child['url'], '/'))) {
-                $childActive = 'active';
-                break;
-            }
-        }
-    }
-
-    // Render menu item
-    $subMenu .= '
-    <div class="menu-item ' . $hasSub . ' ' . $active . ' ' . $childActive . '">
-        <a href="' . url($menuUrl) . '" class="menu-link">
-            <span class="menu-text">' . $menuText . '</span>
-            ' . $menuCaret . '
-        </a>';
-
-        // If has children, render recursively
-        if (!empty($menu['children'])) {
-        $subMenu .= renderSubMenu($menu['children'], $currentUrl);
-        }
-
-        $subMenu .= '</div>'; // Close menu-item
-    }
-    $subMenu .= '</div>'; // Close menu-submenu
-return $subMenu;
-}
 @endphp
-
 <!-- BEGIN #sidebar -->
-<div id="sidebar" class="app-sidebar">
+<div id="sidebar" class="app-sidebar" style="width: 200px;">
     <!-- BEGIN scrollbar -->
     <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
-        <!-- BEGIN menu -->
-        <div class="menu">
-            @foreach($menus as $category => $items)
-            <div class="menu-header">{{ $category }}</div> {{-- Category Header --}}
-            @foreach($items as $menu)
-            @php
-            $menuUrl = $menu['url'] ?? '#';
-            $menuText = $menu['text'] ?? '';
-            $menuIcon = $menu['icon'] ?? '';
-            $hasSub = !empty($menu['children']) ? 'has-sub' : '';
-            $menuCaret = $hasSub ? '<span class="menu-caret"><b class="caret"></b></span>' : '';
-
-            // Check active state
-            $active = request()->is(ltrim($menuUrl, '/')) ? 'active' : '';
-
-            // Check if any child is active
-            $childActive = '';
-            if (!empty($menu['children'])) {
-                foreach ($menu['children'] as $child) {
-                    if (request()->is(ltrim($child['url'], '/'))) {
-                        $childActive = 'active';
-                        break;
-                    }
-                }
-            }
-            @endphp
-
-            <div class="menu-item {{ $hasSub }} {{ $active }} {{ $childActive }}">
-                <a href="{{ url($menuUrl) }}" class="menu-link">
-                    <span class="menu-icon">
-                        <iconify-icon icon="{{ $menuIcon }}"></iconify-icon>
-                    </span>
-                    <span class="menu-text">{{ $menuText }}</span>
-                    {!! $menuCaret !!}
-                </a>
-
-                {{-- Render submenu if exists --}}
-                @if (!empty($menu['children']))
-                {!! renderSubMenu($menu['children'], $currentUrl) !!}
-                @endif
+        <!-- BEGIN user-info -->
+        <div class="card mb-3">
+            <div class="card-header">User Info</div>
+            <div class="card-body">
+                <p><strong>Username:</strong> {{ auth()->user()->name }}</p>
+                <p><strong>Rank:</strong> {{ auth()->user()->rank }}</p>
+                <p><strong>Health:</strong> {{ auth()->user()->health }}</p>
             </div>
-            @endforeach
+        </div>
+        <!-- END user-info -->
+
+        <!-- BEGIN menu -->
+        <div class="card mb-3">
+            <div class="card-header">Navigation</div> {{-- Single Header --}}
+            @foreach($menus as $items)
+                @foreach($items as $menu)
+                    @php
+                    $menuUrl = $menu['url'] ?? '#';
+                    $menuText = $menu['text'] ?? '';
+
+                    // Check active state
+                    $active = request()->is(ltrim($menuUrl, '/')) ? 'active' : '';
+                    @endphp
+
+                    <div class="card-body menu-card p-0">
+                        <div class="menu-item" style="padding-left: 5px; padding-right: 5px; {{ $active ? 'font-weight: bold; color: var(--bs-theme);' : '' }}">
+                            <a href="{{ url($menuUrl) }}" class="list-group-item list-group-item-action d-flex align-items-center">
+                                <div class="flex-fill py-1">
+                                    <div class="fw-semibold">{{ $menuText }}</div>
+                                </div>
+                                <div>
+                                    {!! app('hooks')->runHook('menu_item_suffix', $menu) !!}
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
             @endforeach
         </div>
         <!-- END menu -->
@@ -124,4 +75,10 @@ return $subMenu;
 <!-- BEGIN mobile-sidebar-backdrop -->
 <button class="app-sidebar-mobile-backdrop" data-toggle-target=".app" data-toggle-class="app-sidebar-mobile-toggled"></button>
 <!-- END mobile-sidebar-backdrop -->
+
+<style>
+.menu-card:hover {
+    background-color: rgba(var(--bs-theme-rgb), 0.1);
+}
+</style>
 

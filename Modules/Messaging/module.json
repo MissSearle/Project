@@ -22,25 +22,9 @@
             {
                 "text": "Mail",
                 "icon": "ph:envelope",
+                "url": "/inbox",
                 "category": "Main",
-                "priority": 3,
-                "children": [
-                    {
-                        "text": "Inbox",
-                        "url": "/inbox",
-                        "priority": 1
-                    },
-                    {
-                        "text": "Sent",
-                        "url": "/outbox",
-                        "priority": 2
-                    },
-                    {
-                        "text": "Saved",
-                        "url": "/saved",
-                        "priority": 3
-                    }
-                ]
+                "priority": 3
             }
         ]
     }

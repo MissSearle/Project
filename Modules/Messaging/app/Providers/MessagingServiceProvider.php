@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Modules\Messaging\Models\Message; // Ensure this import is correct
 
 class MessagingServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,15 @@ class MessagingServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->loadMigrationsFrom(module_path($this->name, 'database/migrations'));
+
+        app('hooks')->addHook('menu_item_suffix', function ($menu) {
+            if ($menu['text'] === 'Mail') {
+                $unreadCount = Message::where('receiver_id', auth()->id())->where('is_read', false)->count(); // Ensure correct field names
+                return "<span class='badge bg-danger ms-2'>{$unreadCount}</span>";
+            }
+
+            return '';
+        });
     }
 
     /**
